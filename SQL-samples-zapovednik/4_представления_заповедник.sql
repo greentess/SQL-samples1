@@ -1,26 +1,26 @@
---ОБНОВЛЯЕМЫЙ
- Представление, содержащее информацию об экскурсиях, которые  проводили для туриста Фролова Назара Степановича
+--РћР‘РќРћР’Р›РЇР•РњР«Р™
+ РџСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ, СЃРѕРґРµСЂР¶Р°С‰РµРµ РёРЅС„РѕСЂРјР°С†РёСЋ РѕР± СЌРєСЃРєСѓСЂСЃРёСЏС…, РєРѕС‚РѕСЂС‹Рµ  РїСЂРѕРІРѕРґРёР»Рё РґР»СЏ С‚СѓСЂРёСЃС‚Р° Р¤СЂРѕР»РѕРІР° РќР°Р·Р°СЂР° РЎС‚РµРїР°РЅРѕРІРёС‡Р°
 CREATE VIEW z_e1
 AS
 SELECT z_tourist.tourist_name, z_excursion.excursion_num, z_excursion.excursion_date, z_excursion.excursion_price
 FROM z_excursion INNER JOIN
  z_tourist   ON z_tourist.tourist_num = z_excursion.tourist_num 
-WHERE tourist_name='Фролов Назар Степанович' 
+WHERE tourist_name='Р¤СЂРѕР»РѕРІ РќР°Р·Р°СЂ РЎС‚РµРїР°РЅРѕРІРёС‡' 
 GO
 SELECT * FROM z_e1
 
---ОБНОВЛЯЕМЫЙ
- Представление, содержащее информацию об экскурсиях, которые проводил работник Наумов Исак Оскарович
+--РћР‘РќРћР’Р›РЇР•РњР«Р™
+ РџСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ, СЃРѕРґРµСЂР¶Р°С‰РµРµ РёРЅС„РѕСЂРјР°С†РёСЋ РѕР± СЌРєСЃРєСѓСЂСЃРёСЏС…, РєРѕС‚РѕСЂС‹Рµ РїСЂРѕРІРѕРґРёР» СЂР°Р±РѕС‚РЅРёРє РќР°СѓРјРѕРІ РСЃР°Рє РћСЃРєР°СЂРѕРІРёС‡
 CREATE VIEW z_excursion2
 AS
 SELECT z_staff.staff_name, z_excursion.excursion_num, z_excursion.excursion_date, z_excursion.excursion_price
 FROM z_excursion INNER JOIN z_staff   ON z_staff.staff_num=z_excursion.staff_num
-WHERE staff_name='Наумов Исак Оскарович'
+WHERE staff_name='РќР°СѓРјРѕРІ РСЃР°Рє РћСЃРєР°СЂРѕРІРёС‡'
 GO
 SELECT * FROM z_excursion2
 
---ОБНОВЛЯЕМЫЙ
-Представление, содержащее список животных, которые находятся в 3 зоне
+--РћР‘РќРћР’Р›РЇР•РњР«Р™
+РџСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ, СЃРѕРґРµСЂР¶Р°С‰РµРµ СЃРїРёСЃРѕРє Р¶РёРІРѕС‚РЅС‹С…, РєРѕС‚РѕСЂС‹Рµ РЅР°С…РѕРґСЏС‚СЃСЏ РІ 3 Р·РѕРЅРµ
 CREATE VIEW z_object1
 AS
 SELECT  z_object.zona_num, z_animal.animal_class, z_animal.animal_family, z_animal.animal_genus, z_animal.animal_species,
@@ -30,8 +30,8 @@ WHERE zona_num=3
 GO
 SELECT*FROM z_object1
 
---НЕОБНОВЛЯЕМЫЙ
-Представление, содержащее информацию о сумме стоимостей экскурсий, проведенных каждым сотрудником
+--РќР•РћР‘РќРћР’Р›РЇР•РњР«Р™
+РџСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ, СЃРѕРґРµСЂР¶Р°С‰РµРµ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ СЃСѓРјРјРµ СЃС‚РѕРёРјРѕСЃС‚РµР№ СЌРєСЃРєСѓСЂСЃРёР№, РїСЂРѕРІРµРґРµРЅРЅС‹С… РєР°Р¶РґС‹Рј СЃРѕС‚СЂСѓРґРЅРёРєРѕРј
 CREATE VIEW sum_ex1
 AS
 SELECT staff_num,  SUM(excursion_price) AS excursion_price 
@@ -40,8 +40,8 @@ GROUP BY staff_num
 GO
 SELECT * FROM sum_ex1
 
---ОБНОВЛЯЕМОЕ
-Представление, содержащее информацию о сотрудниках (их фио и должность), которые проводили экскурсию в текущем году 
+--РћР‘РќРћР’Р›РЇР•РњРћР•
+РџСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ, СЃРѕРґРµСЂР¶Р°С‰РµРµ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ СЃРѕС‚СЂСѓРґРЅРёРєР°С… (РёС… С„РёРѕ Рё РґРѕР»Р¶РЅРѕСЃС‚СЊ), РєРѕС‚РѕСЂС‹Рµ РїСЂРѕРІРѕРґРёР»Рё СЌРєСЃРєСѓСЂСЃРёСЋ РІ С‚РµРєСѓС‰РµРј РіРѕРґСѓ 
 CREATE VIEW ex_date
 AS
 SELECT staff_name, staff_post FROM z_staff a
@@ -53,7 +53,7 @@ AND a.staff_num=b.staff_num)
 GO
 SELECT * FROM ex_date
 
---Представление, содержащее информацию о животных, которые поступили после 2019 года
+--РџСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ, СЃРѕРґРµСЂР¶Р°С‰РµРµ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ Р¶РёРІРѕС‚РЅС‹С…, РєРѕС‚РѕСЂС‹Рµ РїРѕСЃС‚СѓРїРёР»Рё РїРѕСЃР»Рµ 2019 РіРѕРґР°
 CREATE VIEW animal_date2
 AS
 SELECT  animal_class, animal_family, animal_genus, animal_species , animal_rdate , animal_age , animal_gender,	animal_rarity
