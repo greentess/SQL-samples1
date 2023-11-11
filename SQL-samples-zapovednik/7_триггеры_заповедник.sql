@@ -1,4 +1,4 @@
---Триггер, который добавляет новую запись в таблицу состояния животных, когда в заповедник поступает новое животное. 
+--РўСЂРёРіРіРµСЂ, РєРѕС‚РѕСЂС‹Р№ РґРѕР±Р°РІР»СЏРµС‚ РЅРѕРІСѓСЋ Р·Р°РїРёСЃСЊ РІ С‚Р°Р±Р»РёС†Сѓ СЃРѕСЃС‚РѕСЏРЅРёСЏ Р¶РёРІРѕС‚РЅС‹С…, РєРѕРіРґР° РІ Р·Р°РїРѕРІРµРґРЅРёРє РїРѕСЃС‚СѓРїР°РµС‚ РЅРѕРІРѕРµ Р¶РёРІРѕС‚РЅРѕРµ. 
 CREATE TRIGGER trig_animaladd1 ON z_animal
 FOR INSERT
 AS
@@ -8,18 +8,18 @@ DECLARE @animal_species as VARCHAR(30)
 	BEGIN
 		SELECT @animal_species=animal_species, @animal_rdate=animal_rdate  FROM inserted
 		SELECT @object_num=object_num FROM z_animal WHERE animal_species=@animal_species AND animal_rdate=@animal_rdate
-		INSERT INTO z_сondition (visit_date,condition_cond,object_num)
-		VALUES (@animal_rdate,'Только что поступил. Требуется более подробный осмотр',@object_num)
+		INSERT INTO z_СЃondition (visit_date,condition_cond,object_num)
+		VALUES (@animal_rdate,'РўРѕР»СЊРєРѕ С‡С‚Рѕ РїРѕСЃС‚СѓРїРёР». РўСЂРµР±СѓРµС‚СЃСЏ Р±РѕР»РµРµ РїРѕРґСЂРѕР±РЅС‹Р№ РѕСЃРјРѕС‚СЂ',@object_num)
 	END
 SELECT * FROM z_object
 SELECT * FROM z_animal
-SELECT * FROM z_сondition
-EXEC add_a 3,'Птицы', 'Утиные','Лесные утки','Мандаринка', '2019-05-07', '5 месяцев','Самка','-'
+SELECT * FROM z_СЃondition
+EXEC add_a 3,'РџС‚РёС†С‹', 'РЈС‚РёРЅС‹Рµ','Р›РµСЃРЅС‹Рµ СѓС‚РєРё','РњР°РЅРґР°СЂРёРЅРєР°', '2019-05-07', '5 РјРµСЃСЏС†РµРІ','РЎР°РјРєР°','-'
 SELECT * FROM z_object
 SELECT * FROM z_animal
-SELECT * FROM z_сondition
+SELECT * FROM z_СЃondition
 
---Триггер, который при удалении туриста удаляет связанную с ним экскурсию
+--РўСЂРёРіРіРµСЂ, РєРѕС‚РѕСЂС‹Р№ РїСЂРё СѓРґР°Р»РµРЅРёРё С‚СѓСЂРёСЃС‚Р° СѓРґР°Р»СЏРµС‚ СЃРІСЏР·Р°РЅРЅСѓСЋ СЃ РЅРёРј СЌРєСЃРєСѓСЂСЃРёСЋ
 
 ALTER TABLE z_excursion DROP CONSTRAINT fk_tourist_excursion_num 
 
@@ -32,26 +32,26 @@ AS
 SELECT * FROM z_tourist
 SELECT * FROM z_excursion
 
---Триггер который удаляет объект при удалении животного, а также инфу в таблицах состояние и потомство
+--РўСЂРёРіРіРµСЂ РєРѕС‚РѕСЂС‹Р№ СѓРґР°Р»СЏРµС‚ РѕР±СЉРµРєС‚ РїСЂРё СѓРґР°Р»РµРЅРёРё Р¶РёРІРѕС‚РЅРѕРіРѕ, Р° С‚Р°РєР¶Рµ РёРЅС„Сѓ РІ С‚Р°Р±Р»РёС†Р°С… СЃРѕСЃС‚РѕСЏРЅРёРµ Рё РїРѕС‚РѕРјСЃС‚РІРѕ
 CREATE TRIGGER del_animal ON z_animal
 FOR DELETE
 AS
 	    BEGIN
 		DELETE FROM z_object WHERE object_num IN (SELECT object_num FROM DELETED)	
-		DELETE FROM z_сondition WHERE object_num IN (SELECT object_num FROM DELETED)	
+		DELETE FROM z_СЃondition WHERE object_num IN (SELECT object_num FROM DELETED)	
 		DELETE FROM z_progeny WHERE object_num IN (SELECT object_num FROM DELETED)	
 		END
 
 
---Триггер который при удалнии животного удаляет инфу в таблицах состояние и потомство
+--РўСЂРёРіРіРµСЂ РєРѕС‚РѕСЂС‹Р№ РїСЂРё СѓРґР°Р»РЅРёРё Р¶РёРІРѕС‚РЅРѕРіРѕ СѓРґР°Р»СЏРµС‚ РёРЅС„Сѓ РІ С‚Р°Р±Р»РёС†Р°С… СЃРѕСЃС‚РѕСЏРЅРёРµ Рё РїРѕС‚РѕРјСЃС‚РІРѕ
 
 
 
 
 
---Тригггер, который при удалении отделя удаляет входящих в него сотрудников 
---(и при удалении сотрудников удаляется информация об их ответсвенности за зону в заповеднике
--- и информация о проводимых ими экскурсиях)
+--РўСЂРёРіРіРіРµСЂ, РєРѕС‚РѕСЂС‹Р№ РїСЂРё СѓРґР°Р»РµРЅРёРё РѕС‚РґРµР»СЏ СѓРґР°Р»СЏРµС‚ РІС…РѕРґСЏС‰РёС… РІ РЅРµРіРѕ СЃРѕС‚СЂСѓРґРЅРёРєРѕРІ 
+--(Рё РїСЂРё СѓРґР°Р»РµРЅРёРё СЃРѕС‚СЂСѓРґРЅРёРєРѕРІ СѓРґР°Р»СЏРµС‚СЃСЏ РёРЅС„РѕСЂРјР°С†РёСЏ РѕР± РёС… РѕС‚РІРµС‚СЃРІРµРЅРЅРѕСЃС‚Рё Р·Р° Р·РѕРЅСѓ РІ Р·Р°РїРѕРІРµРґРЅРёРєРµ
+-- Рё РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РїСЂРѕРІРѕРґРёРјС‹С… РёРјРё СЌРєСЃРєСѓСЂСЃРёСЏС…)
 CREATE TRIGGER del_dept ON z_dept
 INSTEAD OF DELETE
 AS 
@@ -84,9 +84,3 @@ ALTER TABLE z_resp_zona DROP  CONSTRAINT fk_resp_zona_staff_num
 ALTER TABLE z_dept DROP  CONSTRAINT fk_dept_staff_num
 ALTER TABLE z_staff DROP  CONSTRAINT fk_staff_dept_num
 ALTER TABLE z_excursion DROP CONSTRAINT fk_staff_excursion_num
-
-
-
-
-
-
