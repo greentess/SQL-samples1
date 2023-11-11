@@ -3,9 +3,9 @@ USE Zapovednik
 
 --SELECT tourist_name, tourist_address  FROM z_tourist
 
---SELECT 'Турист № '+CONVERT(CHAR(6),tourist_num)+
--- ' посетил экскурсию '+ CONVERT(CHAR(12),excursion_date)+
--- '  стоимостью  '+CONVERT(CHAR(9),excursion_price)
+--SELECT 'РўСѓСЂРёСЃС‚ в„– '+CONVERT(CHAR(6),tourist_num)+
+-- ' РїРѕСЃРµС‚РёР» СЌРєСЃРєСѓСЂСЃРёСЋ '+ CONVERT(CHAR(12),excursion_date)+
+-- '  СЃС‚РѕРёРјРѕСЃС‚СЊСЋ  '+CONVERT(CHAR(9),excursion_price)
 --FROM z_excursion
 
 --SELECT DISTINCT tourist_address FROM z_tourist
@@ -17,7 +17,7 @@ USE Zapovednik
 --SELECT staff_name FROM z_staff
 --WHERE staff_phone IS NOT NULL
 
---SELECT object_num  as "Название предприятия"
+--SELECT object_num  as "РќР°Р·РІР°РЅРёРµ РїСЂРµРґРїСЂРёСЏС‚РёСЏ"
 --FROM z_object
 --WHERE zona_num IN (1,2)
 
@@ -25,7 +25,7 @@ USE Zapovednik
 --WHERE excursion_date BETWEEN '2000-01-01' AND '2018-01-01' 
 
 --SELECT staff_name FROM z_staff
---WHERE staff_name LIKE 'Д%'
+--WHERE staff_name LIKE 'Р”%'
 
 --SELECT SUM(excursion_price) FROM z_excursion
 --WHERE staff_num =5
@@ -36,8 +36,8 @@ USE Zapovednik
 
 --SELECT staff_name FROM z_staff ORDER BY staff_hiredate
 
---НЕСВЯЗАННЫЙ ПОДЗАПРОС
---Получить список сотрудников, которые ответственны за зону, в которой есть Енот-полоскун
+--РќР•РЎР’РЇР—РђРќРќР«Р™ РџРћР”Р—РђРџР РћРЎ
+--РџРѕР»СѓС‡РёС‚СЊ СЃРїРёСЃРѕРє СЃРѕС‚СЂСѓРґРЅРёРєРѕРІ, РєРѕС‚РѕСЂС‹Рµ РѕС‚РІРµС‚СЃС‚РІРµРЅРЅС‹ Р·Р° Р·РѕРЅСѓ, РІ РєРѕС‚РѕСЂРѕР№ РµСЃС‚СЊ Р•РЅРѕС‚-РїРѕР»РѕСЃРєСѓРЅ
 SELECT staff_name FROM z_staff 
 WHERE  staff_num IN
 	(SELECT staff_num FROM z_resp_zona
@@ -45,10 +45,10 @@ WHERE  staff_num IN
 		(SELECT zona_num FROM z_object
 		WHERE object_num IN
 			(SELECT object_num FROM z_animal
-			WHERE animal_species = 'Енот-полоскун')))
+			WHERE animal_species = 'Р•РЅРѕС‚-РїРѕР»РѕСЃРєСѓРЅ')))
 
---НЕСВЯЗАННЫЙ ПОДЗАПРОС с использование агрегирующих функций
---Получить название зоны, в которой находится самое редкое животное заповедника
+--РќР•РЎР’РЇР—РђРќРќР«Р™ РџРћР”Р—РђРџР РћРЎ СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ Р°РіСЂРµРіРёСЂСѓСЋС‰РёС… С„СѓРЅРєС†РёР№
+--РџРѕР»СѓС‡РёС‚СЊ РЅР°Р·РІР°РЅРёРµ Р·РѕРЅС‹, РІ РєРѕС‚РѕСЂРѕР№ РЅР°С…РѕРґРёС‚СЃСЏ СЃР°РјРѕРµ СЂРµРґРєРѕРµ Р¶РёРІРѕС‚РЅРѕРµ Р·Р°РїРѕРІРµРґРЅРёРєР°
 SELECT zona_name FROM z_zona
 WHERE  zona_num IN
 	(SELECT zona_num FROM z_object
@@ -57,38 +57,36 @@ WHERE  zona_num IN
 		WHERE animal_rarity= 
 		(SELECT MIN(CONVERT(numeric(1),animal_rarity)) from z_animal)))
 
---СВЯЗАННЫЙ ПОДЗАПРОС
---Получить ФИО и Должность сотрудников, которые проводили экскурсию в текущем году 
+--РЎР’РЇР—РђРќРќР«Р™ РџРћР”Р—РђРџР РћРЎ
+--РџРѕР»СѓС‡РёС‚СЊ Р¤РРћ Рё Р”РѕР»Р¶РЅРѕСЃС‚СЊ СЃРѕС‚СЂСѓРґРЅРёРєРѕРІ, РєРѕС‚РѕСЂС‹Рµ РїСЂРѕРІРѕРґРёР»Рё СЌРєСЃРєСѓСЂСЃРёСЋ РІ С‚РµРєСѓС‰РµРј РіРѕРґСѓ 
 
 
---ГРУППИРОВКА
---Получить список сотрудников и общую сумму цен экскурсий, которые каждый из них проводил
+--Р“Р РЈРџРџРР РћР’РљРђ
+--РџРѕР»СѓС‡РёС‚СЊ СЃРїРёСЃРѕРє СЃРѕС‚СЂСѓРґРЅРёРєРѕРІ Рё РѕР±С‰СѓСЋ СЃСѓРјРјСѓ С†РµРЅ СЌРєСЃРєСѓСЂСЃРёР№, РєРѕС‚РѕСЂС‹Рµ РєР°Р¶РґС‹Р№ РёР· РЅРёС… РїСЂРѕРІРѕРґРёР»
 
 SELECT staff_name, SUM(excursion_price) AS 'excursion_sum' 
 FROM z_excursion e, z_staff s
 WHERE e.staff_num=s.staff_num
 GROUP BY staff_name
 
---ВЫБОРКА ИЗ НЕСКОЛЬКИХ ТАБЛИЦ
---Напечатать список животных с указанием названия зоны, в которой они находятся
+--Р’Р«Р‘РћР РљРђ РР— РќР•РЎРљРћР›Р¬РљРРҐ РўРђР‘Р›РР¦
+--РќР°РїРµС‡Р°С‚Р°С‚СЊ СЃРїРёСЃРѕРє Р¶РёРІРѕС‚РЅС‹С… СЃ СѓРєР°Р·Р°РЅРёРµРј РЅР°Р·РІР°РЅРёСЏ Р·РѕРЅС‹, РІ РєРѕС‚РѕСЂРѕР№ РѕРЅРё РЅР°С…РѕРґСЏС‚СЃСЏ
 SELECT animal_species, zona_name, animal_rdate
 FROM z_object f, z_animal c, z_zona a
 WHERE f.object_num=c.object_num AND f.zona_num=a.zona_num
---(в таблице animal есть указание object_num, в таблице objeсt есть указание zona_num, а в таблице zona есть zona_name)
+--(РІ С‚Р°Р±Р»РёС†Рµ animal РµСЃС‚СЊ СѓРєР°Р·Р°РЅРёРµ object_num, РІ С‚Р°Р±Р»РёС†Рµ objeСЃt РµСЃС‚СЊ СѓРєР°Р·Р°РЅРёРµ zona_num, Р° РІ С‚Р°Р±Р»РёС†Рµ zona РµСЃС‚СЊ zona_name)
 
---ВЫБОРКА ИЗ НЕСКОЛЬКИХ ТАБЛИЦ  ПОМОЩЬЮ JOIN
---Напечатать список животных и даты рождения их детенышей
+--Р’Р«Р‘РћР РљРђ РР— РќР•РЎРљРћР›Р¬РљРРҐ РўРђР‘Р›РР¦  РџРћРњРћР©Р¬Р® JOIN
+--РќР°РїРµС‡Р°С‚Р°С‚СЊ СЃРїРёСЃРѕРє Р¶РёРІРѕС‚РЅС‹С… Рё РґР°С‚С‹ СЂРѕР¶РґРµРЅРёСЏ РёС… РґРµС‚РµРЅС‹С€РµР№
 SELECT animal_species, progeny_birth_date
 FROM z_animal a JOIN  z_progeny p  ON a.object_num=p.object_num 
 
---ОБЪЕДИНЕНИЕ ЗАПРОСОВ
---Получить список экскурсий и сумму каждой экскурсии, а также строку с итоговой суммой:
-SELECT ' Экскурсия № '+CONVERT(CHAR(6),excursion_num) AS "Номер",
-'на сумму ' + CONVERT(CHAR(6),excursion_price) AS "Сумма" FROM z_excursion
+--РћР‘РЄР•Р”РРќР•РќРР• Р—РђРџР РћРЎРћР’
+--РџРѕР»СѓС‡РёС‚СЊ СЃРїРёСЃРѕРє СЌРєСЃРєСѓСЂСЃРёР№ Рё СЃСѓРјРјСѓ РєР°Р¶РґРѕР№ СЌРєСЃРєСѓСЂСЃРёРё, Р° С‚Р°РєР¶Рµ СЃС‚СЂРѕРєСѓ СЃ РёС‚РѕРіРѕРІРѕР№ СЃСѓРјРјРѕР№:
+SELECT ' Р­РєСЃРєСѓСЂСЃРёСЏ в„– '+CONVERT(CHAR(6),excursion_num) AS "РќРѕРјРµСЂ",
+'РЅР° СЃСѓРјРјСѓ ' + CONVERT(CHAR(6),excursion_price) AS "РЎСѓРјРјР°" FROM z_excursion
 UNION
-SELECT 'ИТОГО: ', CONVERT(CHAR(6),SUM(excursion_price)) FROM z_excursion 
-
-
+SELECT 'РРўРћР“Рћ: ', CONVERT(CHAR(6),SUM(excursion_price)) FROM z_excursion 
 
 
 
